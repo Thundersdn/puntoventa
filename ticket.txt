@@ -1,0 +1,20 @@
+     Demo   
+     Demo   
+DEmostracion
+Tel:DEmostracion
+RFC: DEmostracion
+DEmostracion,DEmostracion.
+Fecha: 14/3/2016
+Hora: 06:31:03
+Ticket: 1-
+---------------------
+Total  : $65.00
+Su Pago: $
+Cambio : 
+     Lo atendio:    
+  USUARIO DEMO
+---------------------
+Cant. Art.  Monto
+---------------------
+1.00|PRUEBA DE ARTICULO
+           65.00
