@@ -73,7 +73,9 @@ function agrega_a_lista(){
             var costou=$("#costo").val();
             var cantidad=$("#cantidad").val();
             var monto=cantidad*costou;
-            var descuento=monto*$("#descuento").val()/100;
+			/* Remover % de la entrada*/
+			var desc = $("#descuento").val().substr(0, $("#descuento").val().length - 1);
+            var descuento=monto*desc/100;
             $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>"+costou+"</td><td>"+monto.toFixed(2)+"</td><td>"+descuento.toFixed(2)+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
             /*graba la entrada temporalmente*/
              $.ajax({
@@ -111,14 +113,13 @@ $(function(){
        });
 /***********************************************************************************/
 function resumen(){
-            var totales=0.00;
+            var totales=0;
             var de=0.00;
             var t=0.00;
-            var ar=0.00;
+            var ar=0;
             $('#tabla_articulos > tbody > tr').each(function(){
-            var montoss = parseFloat($(this).find("td").eq(4).html());
+            var montoss = parseInt($(this).find("td").eq(4).html());
             var descs=    parseFloat($(this).find('td').eq(5).html());
-            ar +=parseFloat($(this).find('td').eq(2).html());
             totales = totales+montoss;
             de = de+descs;
             t=t+(montoss-descs);

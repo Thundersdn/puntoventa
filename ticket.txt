@@ -4,17 +4,17 @@ DEmostracion
 Tel:DEmostracion
 RFC: DEmostracion
 DEmostracion,DEmostracion.
-Fecha: 14/3/2016
-Hora: 06:31:03
+Fecha: 23/5/2018
+Hora: 08:39:13
 Ticket: 1-
 ---------------------
-Total  : $65.00
-Su Pago: $
-Cambio : 
+Total  : $12000.00
+Su Pago: $15000.00
+Cambio : $ 3000.00
      Lo atendio:    
-  USUARIO DEMO
+  administrador
 ---------------------
 Cant. Art.  Monto
 ---------------------
-1.00|PRUEBA DE ARTICULO
-           65.00
+12.00|AUT
+           12000.00

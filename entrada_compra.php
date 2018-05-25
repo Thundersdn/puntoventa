@@ -81,15 +81,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
              <span class='input-group-addon bg-purple'><i class="fa fa-database"></i> Impuesto:</span>
              <select class='form-control select2' id='impuesto' style='width: 100%;' onchange="actualiza_impuesto_temp();">
              <option value='0'>Sin impuesto</option>
-             <option value='8'>8 % de Impuesto</option>
-             <option value='16'>16 % de Impuesto</option>
+             <option value='19'>19% I.V.A.</option>
              </select>
             </div>
             <br>
             <div class='input-group'>
-             <span class='input-group-addon bg-purple'><i class="fa fa-plus"></i> Descuento (% en porc.):</span>
+				<!--ingreso en porcentaje-->
+             <span class='input-group-addon bg-purple'><i class="fa fa-plus"></i> Descuento :</span> 
              <input type="text" class="form-control cantidades" id="descuento" onchange="actualiza_descuento_temp();"
-             data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+             data-inputmask="'alias': 'integer','min': 0, 'max': 100,'suffix': '%', 'autoGroup': true, 'digits': 0, 'digitsOptional': true, 'placeholder': '0'">
             </div>
             </form>
            </div>
@@ -116,14 +116,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-usd"></i> Costo:</span>
              <input type="text" class="form-control pull-right cantidades" id="costo"
-             data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'"
+             data-inputmask="'alias': 'integer', 'autoGroup': true, 'placeholder': '0'"
              style="font-size:20px; text-align:center; color:blue; font-weight: bold;" disabled>
             </div>
             <br>
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-calculator"></i> Cantidad:</span>
              <input type="text" class="form-control pull-right cantidades" id="cantidad"
-             data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'"
+             data-inputmask="'alias': 'integer', 'autoGroup': true, 'placeholder': '0'"
              style="font-size:20px; text-align:center; color:blue; font-weight: bold;" disabled>
             </div>
             <br>
@@ -153,7 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-dollar"></i> Descuento:</span>
              <input type="text" class="form-control pull-right" id="des" value=''
-             style="font-size:20px; text-align:center; color:blue; font-weight: bold;" disabled>
+             style="font-size:20px; text-align:center; color:blue; font-weight: bold;" data-inputmask="'alias': 'integer'" disabled>
             </div>
 
             <div class='input-group'>

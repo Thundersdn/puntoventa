@@ -1,6 +1,6 @@
 <?php
 ///CLASE PARA CONECTAR CON MYSQL.....////
-error_reporting(0);
+error_reporting(1);
 class ConexionMySQL{
 
   private $conexion;

@@ -102,7 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <label for="costo" class="col-sm-2 control-label">Costo:</label>
                     <div class="col-sm-2">
                     <input type="text" class="form-control cantidades" id='costo' placeholder='Costo del articulo...'
-                     data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false, 'placeholder': '0'">
+                     data-inputmask="'alias': 'numeric','numericInput': true,'placeholder': '0','groupSeparator':'.','autoGroup': true",'digits':0,'digitsOptional': true,'radixPoint':','>
                     </div>
                     </div>
 

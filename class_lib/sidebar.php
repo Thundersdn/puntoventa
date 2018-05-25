@@ -57,7 +57,7 @@
               <ul class="treeview-menu">
                 <li><a href="entrada_compra.php"><i class="fa fa-download"></i> Entradas X Compra.</a></li>
                 <li><a href="rev_entrada.php"><i class="fa fa-search"></i> Revision de Entradas x Compra.</a></li>
-                <li><a href="valida_cambio.php?opt=1265780909"><i class="fa fa-sort-numeric-asc"></i> Ajustes de Inventario.</a></li>
+                <li><a href="aju_inventarios.php"><i class="fa fa-sort-numeric-asc"></i> Ajustes de Inventario.</a></li>
               </ul>
             </li>
 

@@ -32,8 +32,8 @@ CREATE TABLE `articulos` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
-  `costo` decimal(10,2) NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
+  `costo` int(10) NOT NULL,
+  `precio` int(10) NOT NULL,
   `proveedor` smallint(5) UNSIGNED NOT NULL,
   `linea` smallint(5) UNSIGNED NOT NULL,
   `grupo` smallint(5) UNSIGNED NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE `clientes` (
 CREATE TABLE `existencias` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL,
-  `cantidad` decimal(10,2) NOT NULL
+  `cantidad` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -98,9 +98,9 @@ CREATE TABLE `gastos` (
   `fecha` date NOT NULL,
   `numero_fact` varchar(20) NOT NULL DEFAULT ' ',
   `proveedor` varchar(50) NOT NULL DEFAULT ' ',
-  `subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `subtotal` int(10) NOT NULL DEFAULT '0',
   `iva` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total` int(10) NOT NULL DEFAULT '0',
   `edo` varchar(10) NOT NULL DEFAULT ' ',
   `user` varchar(45) NOT NULL DEFAULT ' ',
   `concepto` varchar(200) NOT NULL DEFAULT ' ',
