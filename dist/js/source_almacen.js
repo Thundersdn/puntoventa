@@ -74,9 +74,9 @@ function agrega_a_lista(){
             var cantidad=$("#cantidad").val();
             var monto=cantidad*costou;
 			/* Remover % de la entrada*/
-			var desc = $("#descuento").val().substr(0, $("#descuento").val().length - 1);
+			var desc = $("#descuento").val();
             var descuento=monto*desc/100;
-            $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>"+costou+"</td><td>"+monto.toFixed(2)+"</td><td>"+descuento.toFixed(2)+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
+            $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>$"+costou+"</td><td>$"+monto+"</td><td>$"+descuento+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
             /*graba la entrada temporalmente*/
              $.ajax({
           beforeSend: function(){
@@ -118,18 +118,18 @@ function resumen(){
             var t=0.00;
             var ar=0;
             $('#tabla_articulos > tbody > tr').each(function(){
-            var montoss = parseInt($(this).find("td").eq(4).html());
-            var descs=    parseFloat($(this).find('td').eq(5).html());
+            var montoss = parseInt($(this).find("td").eq(4).html().replace(/\D/g,''));
+            var descs=    parseFloat($(this).find('td').eq(5).html().replace(/\D/g,''));
             totales = totales+montoss;
             de = de+descs;
             t=t+(montoss-descs);
             });
-            $("#net").val("$ "+totales.toFixed(2));
-            $("#des").val("$ "+de.toFixed(2));
+            $("#net").val("$ "+totales);
+            $("#des").val("$ "+de);
             var im=$("#impuesto").val();
             var impuesto_moneda=t*(im/100);
-            $("#tot").val("$ "+(t+impuesto_moneda).toFixed(2));
-            $("#arts").val(ar.toFixed(2));
+            $("#tot").val("$ "+(t+impuesto_moneda));
+            $("#arts").val(ar);
             if(totales>0){
               $("#btn-procesa").prop('disabled', false);
               $("#btn-cancela").prop('disabled', false);
@@ -333,7 +333,7 @@ function procesa_entrada(){
                           $('#tabla_articulos > tbody > tr').each(function(){
                              var cod = $(this).find('td').eq(0).html();
                              var can = $(this).find('td').eq(2).html();
-                             var cu  = $(this).find('td').eq(3).html();
+                             var cu  = $(this).find('td').eq(3).html().replace(/\D/g,'');
                              $.ajax({
                              beforeSend: function(){
                               },

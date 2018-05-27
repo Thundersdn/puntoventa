@@ -116,12 +116,12 @@ CREATE TABLE `gastos` (
 CREATE TABLE `kardex` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL DEFAULT ' ',
-  `cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `cantidad` int(10) NOT NULL DEFAULT '0.00',
   `tipo` varchar(5) NOT NULL DEFAULT ' ',
   `fecha` date NOT NULL,
   `user` varchar(50) NOT NULL DEFAULT ' ',
-  `costou` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `preciou` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `costou` int(10) NOT NULL DEFAULT '0.00',
+  `preciou` int(10) NOT NULL DEFAULT '0.00',
   `proveedor` int(10) NOT NULL,
   `descuento_porcentaje` decimal(10,2) NOT NULL,
   `impuesto_porcentaje` decimal(10,2) NOT NULL,
@@ -193,8 +193,8 @@ CREATE TABLE `temp` (
   `impuesto_porcentaje` decimal(10,2) NOT NULL DEFAULT '0.00',
   `desc_porcentaje` decimal(10,2) NOT NULL DEFAULT '0.00',
   `articulo` varchar(50) NOT NULL DEFAULT ' ',
-  `costo` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `costo` int(10) NOT NULL DEFAULT '0.00',
+  `cantidad` int(10) NOT NULL DEFAULT '0.00',
   `tipo` varchar(5) NOT NULL DEFAULT ' ',
   `descripcion_articulo` varchar(100) NOT NULL DEFAULT ' ',
   `descripcion_prov` varchar(100) NOT NULL
@@ -376,3 +376,6 @@ ALTER TABLE `usuarios`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+

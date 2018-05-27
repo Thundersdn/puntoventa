@@ -116,7 +116,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-usd"></i> Costo:</span>
              <input type="text" class="form-control pull-right cantidades" id="costo"
-             data-inputmask="'alias': 'integer', 'autoGroup': true, 'placeholder': '0'"
+             data-inputmask="'alias': 'dinero', 'autoGroup': true, 'placeholder': '0'"
              style="font-size:20px; text-align:center; color:blue; font-weight: bold;" disabled>
             </div>
             <br>
@@ -147,7 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
            <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-file-text-o"></i> Monto:</span>
              <input type="text" class="form-control pull-right" id="net" value=''
-             style="font-size:20px; text-align:center; color:blue; font-weight: bold;" disabled>
+             style="font-size:20px; text-align:center; color:blue; font-weight: bold;" data-inputmask="'alias': 'dinero'" disabled>
             </div>
 
             <div class='input-group'>
@@ -196,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
            </div>
            </div>
            </div>
-           <input type='hidden' id='num_entrada2' value='0'>
+           <input type='hidden' id='num_entrada2' value='1'>
           </div>
 
         </section><!-- /.content -->
@@ -216,20 +216,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- REQUIRED JS SCRIPTS -->
     <div class="MsjAjaxForm"></div>
-    <?php include "./class_lib/scripts.php"; ?>
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <script src="plugins/select2/select2.full.min.js"></script>
-    <script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="plugins/datepicker/locales/bootstrap-datepicker.es.min.js"></script>
-    <script src="plugins/number/jquery.inputmask.bundle.js"></script>
-    <script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
+	<script src="plugins/fastclick/fastclick.min.js"></script>
+    <?php# include "./class_lib/scripts.php"; ?>
+	<!-- jQuery 3.1.1 -->
+	<script src="./js/jquery-3.1.1.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="./js/bootstrap.min.js"></script>
+	<!-- Script AjaxForms-->
+	<script src="./js/AjaxForms.js"></script>
+	<!-- Sweet Alert 2-->
+	<script src="./js/sweetalert2.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/app.js"></script>
+
+	
+	<script src="plugins/select2/select2.full.min.js"></script>
+	<script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="plugins/datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+	<script src="plugins/number/jquery.inputmask.bundle.js"></script>
+	<script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
+	<script src="./js/main.js"></script>
     <script src="dist/js/source_almacen.js"></script>
     <script type='text/javascript'>
     $("#fecha").datepicker({
       language: "es",
       format: "yyyy-mm-dd"
     });
-
     $(document).ready(function(){
     $(".cantidades").inputmask();
     });
