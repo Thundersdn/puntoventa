@@ -8,7 +8,5 @@
 <script src="./js/sweetalert2.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/app.js"></script>
-
-
 <!-- Script main-->
 <script src="./js/main.js"></script>
