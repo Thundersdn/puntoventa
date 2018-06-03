@@ -4,17 +4,17 @@ DEmostracion
 Tel:DEmostracion
 RFC: DEmostracion
 DEmostracion,DEmostracion.
-Fecha: 26/5/2018
-Hora: 06:21:39
+Fecha: 3/6/2018
+Hora: 03:10:50
 Ticket: 1-
 ---------------------
-Total  : $1200.00
-Su Pago: $1200.00
-Cambio : $ 0.00
+Total  : $186000.00
+Su Pago: $200000.00
+Cambio : $ 14000.00
      Lo atendio:    
   administrador
 ---------------------
 Cant. Art.  Monto
 ---------------------
-2.00|BERLIN
-           1200.00
+310.00|BERLIN
+           186000.00

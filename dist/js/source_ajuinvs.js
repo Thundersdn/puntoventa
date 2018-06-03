@@ -65,7 +65,7 @@ function agrega_a_lista(){
             if(existencia_nueva-existencia_anterior==0){
                tipo='0';
             }
-            insertar=$("#lista_articulos_existencias > tbody").append("<tr id='"+articulo+"'><td class='center'>"+articulo+"</td><td class='center'>"+descripcion+"</td><td class='center'>"+existencia_anterior+"</td><td class='center'>"+existencia_nueva+"</td><td class='center'>"+dif.toFixed(2)+"</td><td class='center'>"+tipo+"</td><td class='center'><button class='btn btn-danger elimina'><i class='fa fa-trash-o'></i></button></td></tr>").hide();
+            insertar=$("#lista_articulos_existencias > tbody").append("<tr id='"+articulo+"'><td class='center'>"+articulo+"</td><td class='center'>"+descripcion+"</td><td class='center'>"+existencia_anterior+"</td><td class='center'>"+existencia_nueva+"</td><td class='center'>"+dif+"</td><td class='center'>"+tipo+"</td><td class='center'><button class='btn btn-danger elimina'><i class='fa fa-trash-o'></i></button></td></tr>").hide();
             insertar.fadeIn(1000);
             cancela();
             $("#codigo").val("");

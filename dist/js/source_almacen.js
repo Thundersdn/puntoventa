@@ -74,8 +74,8 @@ function agrega_a_lista(){
             var cantidad=$("#cantidad").val();
             var monto=cantidad*costou;
 			/* Remover % de la entrada*/
-			var desc = $("#descuento").val();
-            var descuento=monto*desc/100;
+			var desc = $("#descuento").val().replace(/\D/g,'');
+            var descuento=Math.round(monto*desc/100);
             $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>$"+costou+"</td><td>$"+monto+"</td><td>$"+descuento+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
             /*graba la entrada temporalmente*/
              $.ajax({
@@ -118,17 +118,19 @@ function resumen(){
             var t=0.00;
             var ar=0;
             $('#tabla_articulos > tbody > tr').each(function(){
-            var montoss = parseInt($(this).find("td").eq(4).html().replace(/\D/g,''));
-            var descs=    parseFloat($(this).find('td').eq(5).html().replace(/\D/g,''));
-            totales = totales+montoss;
-            de = de+descs;
-            t=t+(montoss-descs);
+				var montoss = parseInt($(this).find("td").eq(4).html().replace(/\D/g,''));
+				var descs=  parseInt($(this).find('td').eq(5).html().replace(/\D/g,''));
+				var artcs = parseInt($(this).find('td').eq(2).html());
+				totales = totales+montoss;
+				de = de+descs;
+				ar = ar+artcs;
+				t=t+(montoss-descs);
             });
             $("#net").val("$ "+totales);
             $("#des").val("$ "+de);
             var im=$("#impuesto").val();
             var impuesto_moneda=t*(im/100);
-            $("#tot").val("$ "+(t+impuesto_moneda));
+            $("#tot").val("$ "+Math.round(t+impuesto_moneda));
             $("#arts").val(ar);
             if(totales>0){
               $("#btn-procesa").prop('disabled', false);
@@ -340,7 +342,7 @@ function procesa_entrada(){
                              url: 'procesa_entrada.php',
                              type: 'POST',
                              data: 'codigo='+cod+'&cantidad='+can+'&fecha='+$("#fecha").val()+'&costou='+cu+
-                             '&proveedor='+$("#proveedor").val()+'&descuento='+$("#descuento").val()+
+                             '&proveedor='+$("#proveedor").val()+'&descuento='+$("#descuento").val().replace(/\D/g,'')+
                              '&tasa_iva='+$("#impuesto").val()+'&num_entrada='+$("#num_entrada2").val()+
                              '&num_fact='+$("#factura").val(),
                              success: function(x){

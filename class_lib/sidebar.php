@@ -58,6 +58,7 @@
                 <li><a href="entrada_compra.php"><i class="fa fa-download"></i> Entradas X Compra.</a></li>
                 <li><a href="rev_entrada.php"><i class="fa fa-search"></i> Revision de Entradas x Compra.</a></li>
                 <li><a href="aju_inventarios.php"><i class="fa fa-sort-numeric-asc"></i> Ajustes de Inventario.</a></li>
+				<li><a href="articulos_reponer.php"><i class="fa fa-clipboard"></i> Articulos a reponer.</a></li>
               </ul>
             </li>
 
