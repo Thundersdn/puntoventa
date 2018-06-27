@@ -31,6 +31,10 @@ class ConexionMySQL{
    return mysql_fetch_array($consulta);
   }
 
+  public function buscar_array_assoc($consulta){
+	  return mysql_fetch_assoc($consulta);
+  }
+  
   public function numero_de_registros($consulta){
     error_reporting(1);
    return mysql_num_rows($consulta);

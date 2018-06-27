@@ -125,23 +125,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 	
-
-    <!-- REQUIRED JS SCRIPTS -->
-    <script src="./js/jquery-3.1.1.min.js"></script>
-	<!-- Bootstrap 3.3.7 -->
-	<script src="./js/bootstrap.min.js"></script>
-	<!-- Script AjaxForms-->
-	<script src="./js/AjaxForms.js"></script>
-	<!-- Sweet Alert 2-->
-	<script src="./js/sweetalert2.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="dist/js/app.js"></script>
 	<div class="MsjAjaxForm"></div>
-    <?php# include "./class_lib/scripts.php"; ?>
+    <?php include "./class_lib/scripts.php"; ?>
 	
     <script src="dist/js/source_ajuinvs.js"></script>
     <script src="plugins/number/jquery.inputmask.bundle.js"></script>
     <script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
 	<script src="./js/main.js"></script>
+	<script src="dist/js/definicion_inputmask.js"></script>
   </body>
 </html>

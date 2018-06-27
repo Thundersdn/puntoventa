@@ -113,28 +113,15 @@
 	
 
     <div class="MsjAjaxForm"></div>
-	<script src="./js/jquery-3.1.1.min.js"></script>
-	<!-- Bootstrap 3.3.7 -->
-	<script src="./js/bootstrap.min.js"></script>
-	<!-- Script AjaxForms-->
-	<script src="./js/AjaxForms.js"></script>
-	<!-- Sweet Alert 2-->
-	<script src="./js/sweetalert2.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="dist/js/app.js"></script>
-    <?php# include "./class_lib/scripts.php"; ?>
+    <?php include "./class_lib/scripts.php"; ?>
     <script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
 	<script src="plugins/morris/morris.min.js"></script>
     <script src="plugins/morris/raphael-min.js"></script>
     
 	<script src="dist/js/source_init.js"></script>
+	<script src="dist/js/definicion_inputmask.js"></script>
 
-	<!-- 
-	+Hacer busca_articulos_stock_min.php
-	+ejecutar javacsript al cargar que ejecute la funcion anterior
-	+si existe algun articulo con stock minimo enviar alerta
-	-->
-	
+
 
   </body>
 </html>

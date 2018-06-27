@@ -8,7 +8,7 @@ require('class_lib/class_conecta_mysql.php');
 
 $db=new ConexionMySQL();
 
-$cadena="Select existencias.codigo, articulos.descripcion, existencias.cantidad, existencias.stock_min from articulos, existencias where existencias.cantidad <= existencias.stock_min ";
+$cadena="Select existencias.codigo, articulos.descripcion, existencias.cantidad, existencias.stock_min from articulos, existencias where existencias.cantidad <= existencias.stock_min AND existencias.codigo = articulos.codigostock";
 
 $exe=$db->consulta($cadena);
 if($db->numero_de_registros($exe)>0){
@@ -23,7 +23,7 @@ if($db->numero_de_registros($exe)>0){
  echo "</tr>";
  echo "</thead>";
  echo "<tbody>";
- while($e=$db->buscar_array($exe)){
+ while($e=$db->buscar_array_assoc($exe)){
    echo "<tr>";
    echo "<td style='text-align: center;'>$e[codigo]</td>";
    echo "<td style='text-align: center;'>$e[descripcion]</td>";

@@ -35,6 +35,14 @@
               </ul>
             </li>
 
+			 <li class="treeview">
+              <a href="#"><i class="fa fa-shopping-cart"></i> <span>Compras.</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="orden_compra.php"><i class=" fa fa-cart-plus"></i> Crear Orden de Compra.</a></li>
+				<li><a href="lista_orden_compra.php"><i class="fa fa-cart-arrow-down"></i> Revisar Ordenes de Compra.</a></li>
+              </ul>
+            </li>
+			
             <li class="treeview">
               <a href="#"><i class="fa fa-users"></i> <span>Cartera Clientes.</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">

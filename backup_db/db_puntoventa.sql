@@ -84,7 +84,9 @@ CREATE TABLE `clientes` (
 CREATE TABLE `existencias` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL,
-  `cantidad` int(10) NOT NULL
+  `cantidad` int(10) NOT NULL,
+  `stock_min` int NOT NULL,
+  `stock_max` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -226,12 +228,56 @@ CREATE TABLE `usuarios` (
   `bodega` varchar(2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `compras`
+--
+CREATE TABLE `compras`(
+	`id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+	`proveedor` int UNSIGNED NOT NULL,
+	`emision` date NOT NULL,
+	`recepcion` date,
+	`total` int UNSIGNED NOT NULL,
+	`referencia` varchar(45) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (proveedor) REFERENCES proveedores(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `clave`, `password`, `bodega`) VALUES
-(1, 'administrador', 'administrador', 'administrador', '1');
+(1, 'admin', 'admin', 'admin', '1');
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+INSERT INTO `proveedores` (`id`, `nombre`, `telefono`, `domicilio`, `ciudad`) VALUES (1, 'FRUNA', '26820307','San Pablo 3059', 'Santiago');
+INSERT INTO `proveedores` (`id`, `nombre`, `telefono`, `domicilio`, `ciudad`) VALUES (2, 'COLUN', '64 2473100','Esmeralda 641', 'La union');
+--
+-- Volcado de datos para la tabla `articulos`
+--
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (1, '1234', 'Helado Cremino',110,300,1,0,0,'','2018-06-30','1234');
+
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (2, '1235', 'Papas Fritas Lays 140g',1000,1500,1,0,0,'','2018-12-30','1235');
+
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (3, '1236', 'Leche Blanca Entera 1L',600,800,2,0,0,'','2018-07-30','1236');
+
+--
+-- Volcado de datos para la tabla `existencias`
+--
+
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(1, '1234', 5, 10, 50);
+
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(2, '1235', 12, 5, 30);
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(3, '1236', 10, 15, 25);
 
 --
 -- Índices para tablas volcadas
@@ -368,6 +414,10 @@ ALTER TABLE `temp`
 --
 ALTER TABLE `tipos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  
+  
+  
+  
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
