@@ -8,7 +8,7 @@ require('class_lib/class_conecta_mysql.php');
 
 $db=new ConexionMySQL();
 
- $cadena="SELECT COUNT(*) FROM kardex WHERE tipo = 'EC'";
+ $cadena="SELECT COUNT(*) FROM compras";
  #error_log($cadena);
  $res = $db->consulta($cadena);
  #error_log($db->buscar_array($res));

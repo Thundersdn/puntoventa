@@ -14,7 +14,7 @@ function revisa_compras(){
                 $("#pone_compras").html("Ocurrio un error al cargar la informacion de compras..."+estado+"    "+error);
               }
             });
-   })
+   });
 }
 /****************************************************/
 function revisa_ventas(){
@@ -33,7 +33,7 @@ function revisa_ventas(){
                 $("#pone_ventas").html("Ocurrio un error al cargar la informacion de ventas..."+estado+"    "+error);
               }
             });
-   })
+   });
 }
 /*********************************************************************************/
 function pone_gastos(){
@@ -52,7 +52,7 @@ function pone_gastos(){
                 $("#pone_gastos").html("Ocurrio un error al cargar la informacion de gastos..."+estado+"    "+error);
               }
             });
-   })
+   });
 }
 /**************************************************************************************/
 function pone_users(){
@@ -71,7 +71,7 @@ function pone_users(){
                 $("#pone_users").html("Ocurrio un error al cargar la informacion de usuarios..."+estado+"    "+error);
               }
             });
-   })
+   });
 }
 /*************************************************************************************/
 function genera_grafica(){
@@ -108,6 +108,7 @@ function genera_grafica_existe(){
  /****************************************************************************/
 
 function revisa_caducidades(){
+	/*
   $(document).ready(function(){
       $.ajax({
           beforeSend: function(){
@@ -130,6 +131,39 @@ function revisa_caducidades(){
           error: function(jqXHR,estado,error){
           }
       });
-  })
+  });
+  */
 }
 /******************************************************************************/
+function alerta_stock_min(){
+	$(document).ready(function(){
+              $.ajax({
+             url: 'busca_articulos_stock_min.php',
+             type: 'POST',
+             data: null,
+             success: function(x){
+			 //console.log(x);
+			 if(x > 0){
+				 var n = noty({text: 'Existen articulos con stock minimo!', 
+				 layout:'topLeft',
+				 theme:'relax',
+				 type:'warning',
+				 timeout:5000,
+				 //buttons:[
+				  //{addClass: 'btn btn-primary',
+                    //text    : 'Verificar articulos',
+                    //onClick : function ($noty){
+                      // $noty.close();
+					   //window.location.href = "/articulos_reponer.php";
+                    //}
+                    //}
+                  //]
+				 });
+			 }
+			 },
+             error: function(jqXHR,estado,error){
+				//var n = noty({text: 'No fue posile revisar stock - '+estado+' '+error, theme:'relax',type:'error'});
+             }
+           });
+	});
+}

@@ -11,7 +11,7 @@ $db= new ConexionMySQL();
 $set_names=$db->consulta("SET NAMES 'utf8'");
 
 $nombre = "";
- if(empty(test_input($_POST['nombre']))){
+ if(test_input($_POST['nombre']) == false){ //compatibilidad para PHP < 5.5
   $consulta="select id,nombre,telefono,domicilio,ciudad from proveedores order by ".$_GET['jtSorting'] ." limit " . $_GET['jtStartIndex'] . ',' . $_GET['jtPageSize'] . "";
   $consulta2="Select COUNT(*) AS RecordCount from proveedores";
   }
@@ -29,6 +29,7 @@ $row = mysql_fetch_assoc($registros);
 $recordCount = $row['RecordCount'];
 
 $trayendo=$db->consulta($consulta);
+error_log($consulta);
 
    while($row=mysql_fetch_assoc($trayendo)){
      $rows[]=$row;

@@ -32,8 +32,8 @@ CREATE TABLE `articulos` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
-  `costo` decimal(10,2) NOT NULL,
-  `precio` decimal(10,2) NOT NULL,
+  `costo` int(10) NOT NULL,
+  `precio` int(10) NOT NULL,
   `proveedor` smallint(5) UNSIGNED NOT NULL,
   `linea` smallint(5) UNSIGNED NOT NULL,
   `grupo` smallint(5) UNSIGNED NOT NULL,
@@ -84,7 +84,9 @@ CREATE TABLE `clientes` (
 CREATE TABLE `existencias` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL,
-  `cantidad` decimal(10,2) NOT NULL
+  `cantidad` int(10) NOT NULL,
+  `stock_min` int NOT NULL,
+  `stock_max` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -98,9 +100,9 @@ CREATE TABLE `gastos` (
   `fecha` date NOT NULL,
   `numero_fact` varchar(20) NOT NULL DEFAULT ' ',
   `proveedor` varchar(50) NOT NULL DEFAULT ' ',
-  `subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `subtotal` int(10) NOT NULL DEFAULT '0',
   `iva` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `total` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `total` int(10) NOT NULL DEFAULT '0',
   `edo` varchar(10) NOT NULL DEFAULT ' ',
   `user` varchar(45) NOT NULL DEFAULT ' ',
   `concepto` varchar(200) NOT NULL DEFAULT ' ',
@@ -116,12 +118,12 @@ CREATE TABLE `gastos` (
 CREATE TABLE `kardex` (
   `id` int(10) UNSIGNED NOT NULL,
   `codigo` varchar(50) NOT NULL DEFAULT ' ',
-  `cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `cantidad` int(10) NOT NULL DEFAULT '0.00',
   `tipo` varchar(5) NOT NULL DEFAULT ' ',
   `fecha` date NOT NULL,
   `user` varchar(50) NOT NULL DEFAULT ' ',
-  `costou` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `preciou` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `costou` int(10) NOT NULL DEFAULT '0.00',
+  `preciou` int(10) NOT NULL DEFAULT '0.00',
   `proveedor` int(10) NOT NULL,
   `descuento_porcentaje` decimal(10,2) NOT NULL,
   `impuesto_porcentaje` decimal(10,2) NOT NULL,
@@ -193,8 +195,8 @@ CREATE TABLE `temp` (
   `impuesto_porcentaje` decimal(10,2) NOT NULL DEFAULT '0.00',
   `desc_porcentaje` decimal(10,2) NOT NULL DEFAULT '0.00',
   `articulo` varchar(50) NOT NULL DEFAULT ' ',
-  `costo` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `costo` int(10) NOT NULL DEFAULT '0.00',
+  `cantidad` int(10) NOT NULL DEFAULT '0.00',
   `tipo` varchar(5) NOT NULL DEFAULT ' ',
   `descripcion_articulo` varchar(100) NOT NULL DEFAULT ' ',
   `descripcion_prov` varchar(100) NOT NULL
@@ -226,12 +228,56 @@ CREATE TABLE `usuarios` (
   `bodega` varchar(2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `compras`
+--
+CREATE TABLE `compras`(
+	`id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+	`proveedor` int UNSIGNED NOT NULL,
+	`emision` date NOT NULL,
+	`recepcion` date,
+	`total` int UNSIGNED NOT NULL,
+	`referencia` varchar(45) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (proveedor) REFERENCES proveedores(id)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `clave`, `password`, `bodega`) VALUES
-(1, 'administrador', 'administrador', 'administrador', '1');
+(1, 'admin', 'admin', 'admin', '1');
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+INSERT INTO `proveedores` (`id`, `nombre`, `telefono`, `domicilio`, `ciudad`) VALUES (1, 'FRUNA', '26820307','San Pablo 3059', 'Santiago');
+INSERT INTO `proveedores` (`id`, `nombre`, `telefono`, `domicilio`, `ciudad`) VALUES (2, 'COLUN', '64 2473100','Esmeralda 641', 'La union');
+--
+-- Volcado de datos para la tabla `articulos`
+--
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (1, '1234', 'Helado Cremino',110,300,1,0,0,'','2018-06-30','1234');
+
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (2, '1235', 'Papas Fritas Lays 140g',1000,1500,1,0,0,'','2018-12-30','1235');
+
+INSERT INTO `articulos` (`id`, `codigo`, `descripcion`, `costo`, `precio`,`proveedor`,`linea`,`grupo`,`imagen`,`fecha_cad`,`codigostock`) VALUES (3, '1236', 'Leche Blanca Entera 1L',600,800,2,0,0,'','2018-07-30','1236');
+
+--
+-- Volcado de datos para la tabla `existencias`
+--
+
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(1, '1234', 5, 10, 50);
+
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(2, '1235', 12, 5, 30);
+INSERT INTO `existencias` (`id`, `codigo`, `cantidad`, `stock_min`, `stock_max`) VALUES
+(3, '1236', 10, 15, 25);
 
 --
 -- Índices para tablas volcadas
@@ -368,6 +414,10 @@ ALTER TABLE `temp`
 --
 ALTER TABLE `tipos`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  
+  
+  
+  
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
@@ -376,3 +426,6 @@ ALTER TABLE `usuarios`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+

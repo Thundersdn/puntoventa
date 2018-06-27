@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
   <head>
-    <title>Almacen|Entradas</title>
+    <title>Orden de compra</title>
     <?php include "./class_lib/links.php"; ?>
     <link rel="stylesheet" href="plugins/select2/select2.min.css">
     <link rel="stylesheet" href="plugins/datepicker/css/bootstrap-datepicker3.css">
@@ -41,12 +41,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Almacen | Entradas X Compra
-            <small><div id='num_entrada' style='color: #C20000'></div></small>
+            Almacen | Crear Orden de Compra
+            <small><div id='num_orden' style='color: #C20000'></div></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="inicio.php"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Entrada X Compra.</li>
+            <li class="active">Orden de Compra.</li>
           </ol>
         </section>
 
@@ -58,38 +58,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class='col-md-4'>
            <div class='box box-primary'>
            <div class='box-header with-border'>
-           <h3 class='box-title'>Datos de la Entrada...</h3>
+           <h3 class='box-title'>Datos de Compra</h3>
            </div>
            <div class='box-body'>
             <form class='form-horizontal'>
-            <div class='input-group'>
-             <span class='input-group-addon bg-purple'>Proveedor:</span>
-             <div id='pone_provs'></div>
-            </div>
-            <br>
-            <div class='input-group'>
+			 <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-calendar"></i> Fecha:</span>
-             <input type="text" class="form-control pull-right" id="fecha" onchange="actualiza_fecha_temp();" autocomplete="off">
+             <input type="text" class="form-control pull-right" id="fecha" onchange="actualiza_fecha_temp();" autocomplete="off" disabled>
             </div>
              <br>
+            <div class='input-group'>
+             <span class='input-group-addon bg-purple'><i class="fa fa-truck"></i>Proveedor:</span>
+             <div id='lista_provs'></div>
+            </div>
+            <br>
+           
              <div class='input-group'>
-             <span class='input-group-addon bg-purple'><i class="fa fa-sticky-note-o"></i> # de Nota/Fact:</span>
-             <input type="text" class="form-control" id="factura" onchange="actualiza_num_fac_entrada_temp();">
+             <span class='input-group-addon bg-purple'><i class="fa fa-sticky-note-o"></i> # de Compra :</span>
+             <input type="text" class="form-control" id="orden" onchange="actualiza_num_fac_entrada_temp();">
             </div>
             <br>
             <div class='input-group'>
-             <span class='input-group-addon bg-purple'><i class="fa fa-database"></i> Impuesto:</span>
-             <select class='form-control select2' id='impuesto' style='width: 100%;' onchange="actualiza_impuesto_temp();">
-             <option value='0'>Sin impuesto</option>
-             <option value='19'>19% I.V.A.</option>
-             </select>
+             <span class='input-group-addon bg-purple'><i class="fa fa-phone"></i>  Telefono :</span>
+             <input type="text" class='form-control' id='telefono' style='width: 100%;' >
             </div>
             <br>
             <div class='input-group'>
 				<!--ingreso en porcentaje-->
-             <span class='input-group-addon bg-purple'><i class="fa fa-plus"></i> Descuento :</span> 
-             <input type="text" class="form-control cantidades" id="descuento" onchange="actualiza_descuento_temp();"
-             data-inputmask="'alias': 'integer','min': 0, 'max': 100,'suffix': '%', 'autoGroup': true, 'digits': 0, 'digitsOptional': true, 'placeholder': '0'">
+             <span class='input-group-addon bg-purple'><i class="fa fa-map-marker"></i> Ubicación :</span> 
+             <input type="text" class="form-control" id="ubicacion">
             </div>
             </form>
            </div>
@@ -149,13 +146,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
              <input type="text" class="form-control pull-right" id="net" value=''
              style="font-size:20px; text-align:center; color:blue; font-weight: bold;" data-inputmask="'alias': 'dinero'" disabled>
             </div>
-
+  <!--
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa fa-dollar"></i> Descuento:</span>
              <input type="text" class="form-control pull-right" id="des" value=''
              style="font-size:20px; text-align:center; color:blue; font-weight: bold;" data-inputmask="'alias': 'integer'" disabled>
             </div>
-
+-->
             <div class='input-group'>
              <span class='input-group-addon bg-purple'><i class="fa  fa-repeat"></i> Monto + IVA:</span>
              <input type="text" class="form-control pull-right" id="tot" value=''
@@ -185,7 +182,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
            <th>Cantidad</th>
            <th>Costo U.</th>
            <th>Costo T.</th>
-           <th>Descuento</th>
            <th>Eliminar</th>
            </tr>
            </thead>
@@ -196,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
            </div>
            </div>
            </div>
-           <input type='hidden' id='num_entrada2' value='1'>
+           <input type='hidden' id='num_orden2' value='1'>
           </div>
 
         </section><!-- /.content -->
@@ -217,7 +213,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
     <div class="MsjAjaxForm"></div>
 	<script src="plugins/fastclick/fastclick.min.js"></script>
-    <?php include "./class_lib/scripts.php"; ?>
+    <?php# include "./class_lib/scripts.php"; ?>
+	<!-- jQuery 3.1.1 -->
+	<script src="./js/jquery-3.1.1.min.js"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="./js/bootstrap.min.js"></script>
+	<!-- Script AjaxForms-->
+	<script src="./js/AjaxForms.js"></script>
+	<!-- Sweet Alert 2-->
+	<script src="./js/sweetalert2.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/app.js"></script>
+
 	
 	<script src="plugins/select2/select2.full.min.js"></script>
 	<script src="plugins/datepicker/js/bootstrap-datepicker.js"></script>
@@ -225,15 +232,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="plugins/number/jquery.inputmask.bundle.js"></script>
 	<script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
 	<script src="./js/main.js"></script>
-    <script src="dist/js/source_almacen.js"></script>
-	<script src="dist/js/definicion_inputmask.js"></script>
+    <script src="dist/js/source_orden.js"></script>
     <script type='text/javascript'>
     $("#fecha").datepicker({
       language: "es",
       format: "yyyy-mm-dd"
     });
+	
     $(document).ready(function(){
     $(".cantidades").inputmask();
+	$("#fecha").datepicker("setDate", new Date());
     });
 
     $(document).ready(function(){

@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
   <head>
-    <title>Happy Cake</title>
+    <title>Ajuste de inventario</title>
     <?php include "./class_lib/links.php"; ?>
   </head>
   <body>
@@ -71,14 +71,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class='form-group'>
                    <label for="exis_anterior" class="col-sm-2 control-label">Anterior:</label>
                     <div class="col-sm-5">
-                    <input type="text" class="form-control" id='exis_anterior' placeholder='Existencia...' disabled>
+                    <input type="text" class="form-control" id='exis_anterior' placeholder='Existencia...' disabled data-inputmask="'alias':'integer','rightAlign': true">
                     </div>
             </div>
             <div class='form-group'>
                     <label for="exis_actual" class="col-sm-2 control-label">Actual:</label>
                     <div class="col-sm-5">
                     <input type="text" class="form-control cantidades" id='exis_actual' placeholder='Existencia...'
-                    data-inputmask="'alias': 'numeric', 'autoGroup': true, 'digits': 2, 'digitsOptional': false" disabled>
+                    data-inputmask="'alias': 'integer', 'autoGroup': true, 'align':'left'" disabled>
                     </div>
             </div>
           </form>
@@ -124,12 +124,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-
-    <!-- REQUIRED JS SCRIPTS -->
-    <div class="MsjAjaxForm"></div>
+	
+	<div class="MsjAjaxForm"></div>
     <?php include "./class_lib/scripts.php"; ?>
+	
     <script src="dist/js/source_ajuinvs.js"></script>
     <script src="plugins/number/jquery.inputmask.bundle.js"></script>
     <script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
+	<script src="./js/main.js"></script>
+	<script src="dist/js/definicion_inputmask.js"></script>
   </body>
 </html>

@@ -9,14 +9,40 @@ function lista_proveedores(){
           type: 'POST',
           data: null,
           success: function(x){
-            $("#pone_provs").html(x);
+            $("#lista_provs").html(x);
             $(".select2").select2();
+			actualizar_info_proveedor();
            },
            error: function(jqXHR,estado,error){
            }
            });
           });
          }
+/***************************************************************************/ 
+function actualizar_info_proveedor(){
+	$(document).ready(function(){
+		$.ajax({
+			beforeSend: function(){
+				$("#telefono").val("Cargando...");
+				$("#ubicacion").val("Cargando...");
+			},
+			url: 'pone_info_provs.php',
+			type: 'POST',
+			dataType: 'json',
+			data: "id_prov="+$("#proveedor").val(),
+			success: function(x){
+				//console.log(x);
+				$("#telefono").val(x.telefono);
+				$("#ubicacion").val(x.domicilio);
+			},
+			error: function(jqXHR,estado,error){
+           }
+			
+		});
+		
+	});
+}
+
 /***************************************************************************/
 function busca_articulo(){
           if($("#codigo").val()!=""){
@@ -25,7 +51,7 @@ function busca_articulo(){
           beforeSend: function(){
             $("#descripcion").html("Buscando informacion del articulo...");
            },
-          url: 'busca_data_articulo_almacen.php',
+          url: 'busca_data_articulo_orden.php',
           type: 'POST',
           dataType: 'json',
           data: 'codigo='+$("#codigo").val(),
@@ -35,15 +61,52 @@ function busca_articulo(){
             $("#codigo").val("");
             $('#codigo').focus();
             }else{
-             $("#descripcion").val(x.descripcion);
-             $("#costo").val(x.costo);
-             $("#costo").attr("disabled", false);
-             $("#cantidad").val("");
-             $("#cantidad").attr("disabled", false);
-             $("#btn-add-article").attr("disabled", false);
-             $("#btn-cancel-article").attr("disabled", false);
-             $("#costo").select();
-             $("#costo").focus();
+			 // console.log($("#proveedor").val());
+			 
+             if($("#proveedor").val() == x.proveedor){
+				 $("#descripcion").val(x.descripcion);
+				 $("#costo").val(x.costo);
+				 $("#costo").attr("disabled", false);
+				 $("#cantidad").val("");
+				 $("#cantidad").attr("disabled", false);
+				 $("#btn-add-article").attr("disabled", false);
+				 $("#btn-cancel-article").attr("disabled", false);
+				 $("#costo").select();
+				 $("#costo").focus();
+			 }else{
+				var n = noty({
+				  text: 'El proveedor registrado para este articulo no corresponde al proveedor seleccionado?',
+				  buttons: [
+					{addClass: 'btn btn-primary', text: 'Continuar', onClick: function($noty) {
+						//console.log($noty.$bar.find('input#example').val());
+						
+						$noty.close();
+						$("#descripcion").val(x.descripcion);
+						 $("#costo").val(x.costo);
+						 $("#costo").attr("disabled", false);
+						 $("#cantidad").val("");
+						 $("#cantidad").attr("disabled", false);
+						 $("#btn-add-article").attr("disabled", false);
+						 $("#btn-cancel-article").attr("disabled", false);
+						 $("#costo").select();
+						 $("#costo").focus();
+						//noty({text: 'You clicked "Ok" button', type: 'success'});
+					  }
+					},
+					{addClass: 'btn btn-danger', text: 'Cancelar', onClick: function($noty) {
+						$noty.close();
+						//noty({text: 'You clicked "Cancel" button', type: 'error'});
+						$("#descripcion").val('');
+						$("#costo").val('');
+					  
+					  }
+					}
+				  ],
+				layout:'center',
+				theme:'relax',
+				type:'warning'});
+				 
+			 }
              }
            },
            error: function(jqXHR,estado,error){
@@ -74,19 +137,17 @@ function agrega_a_lista(){
             var cantidad=$("#cantidad").val();
             var monto=cantidad*costou;
 			/* Remover % de la entrada*/
-			var desc = $("#descuento").val().replace(/\D/g,'');
-            var descuento=Math.round(monto*desc/100);
-            $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>$"+costou+"</td><td>$"+monto+"</td><td>$"+descuento+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
+            $("#tabla_articulos > tbody").append("<tr><td>"+articulo+"</td><td>"+descripcion+"</td><td>"+cantidad+"</td><td>$"+costou+"</td><td>$"+monto+"</td><td><button id='"+articulo+"' class='btn btn-danger btn-xs elimina_articulo' onclick='actualiza_entrada_temp(this.id);'><i class='fa fa-times'></i></button></td></tr>");
             /*graba la entrada temporalmente*/
              $.ajax({
           beforeSend: function(){
            },
           url: 'save_temp_entrada.php',
           type: 'POST',
-          data: "proveedor="+$("#proveedor").val()+"&fecha="+$("#fecha").val()+"&num_fact="+$("#factura").val()+
-          "&impuesto="+$("#impuesto").val()+"&descuento="+$("#descuento").val()+"&articulo="+articulo+
-          "&costo="+$("#costo").val()+"&cantidad="+$("#cantidad").val()+"&tipo="+"EC"+
-          "&descripcion_articulo="+descripcion+"&descripcion_prov="+$("#proveedor option:selected").html(),
+          data: "proveedor="+$("#proveedor").val()+"&fecha="+$("#fecha").val()+"&num_fact="+$("#orden").val()+
+          "&impuesto=0"+"&descuento=0"+"&articulo="+articulo+          "&costo="+$("#costo").val()+"&cantidad="+
+		  $("#cantidad").val()+"&tipo="+"OC"+"&descripcion_articulo="+descripcion+"&descripcion_prov="+
+		  $("#proveedor option:selected").html(),
           success: function(z){
              if(z=="0"){
                alert("No fue posible guardar el registro temporalmente, por favor consulte a soporte de inmediato...");
@@ -114,23 +175,17 @@ $(function(){
 /***********************************************************************************/
 function resumen(){
             var totales=0;
-            var de=0.00;
             var t=0.00;
             var ar=0;
             $('#tabla_articulos > tbody > tr').each(function(){
 				var montoss = parseInt($(this).find("td").eq(4).html().replace(/\D/g,''));
-				var descs=  parseInt($(this).find('td').eq(5).html().replace(/\D/g,''));
 				var artcs = parseInt($(this).find('td').eq(2).html());
 				totales = totales+montoss;
-				de = de+descs;
 				ar = ar+artcs;
-				t=t+(montoss-descs);
+				t=t+montoss;
             });
             $("#net").val("$ "+totales);
-            $("#des").val("$ "+de);
-            var im=$("#impuesto").val();
-            var impuesto_moneda=t*(im/100);
-            $("#tot").val("$ "+Math.round(t+impuesto_moneda));
+            $("#tot").val("$ "+Math.round(t*1.19));
             $("#arts").val(ar);
             if(totales>0){
               $("#btn-procesa").prop('disabled', false);
@@ -146,7 +201,7 @@ function revisa_entrada_ini(){
       $.ajax({
           beforeSend: function(){
            },
-          url: 'search_temp_entrada.php',
+          url: 'search_temp_orden.php',
           type: 'POST',
           dataType: 'json',
           data: null,
@@ -157,21 +212,21 @@ function revisa_entrada_ini(){
               $.each(result, function(i, item){
                 prov_id=result[i].proveedor;
                 impuesto_id=result[i].impuesto_porcentaje;
-                var costot=(result[i].cantidad * result[i].costo).toFixed(2);
+                var costot=(result[i].cantidad * result[i].costo);
                 var descuentot=(costot * result[i].desc_porcentaje/100).toFixed(2);
                 //alert(result[i].articulo);
                 $("#fecha").val(result[i].fecha);
-                $("#factura").val(result[i].num_fact_nota);
+                $("#orden").val(result[i].num_fact_nota);
                 $("#descuento").val(result[i].desc_porcentaje);
-                $("#tabla_articulos > tbody").append("<tr><td>"+result[i].articulo+"</td><td>"+result[i].descripcion_articulo+"</td><td>"+result[i].cantidad+"</td><td>$"+Math.round(result[i].costo)+"</td>"+
-                "<td>$"+Math.round(costot)+"</td><td>"+descuentot+"</td><td><button id='"+result[i].articulo+"' onclick='actualiza_entrada_temp(this.id);' class='btn btn-danger btn-xs elimina_articulo'><i class='fa fa-times'></i></button></td></tr>");
+                $("#tabla_articulos > tbody").append("<tr><td>"+result[i].articulo+"</td><td>"+result[i].descripcion_articulo+"</td><td>"+result[i].cantidad+"</td><td>$"+result[i].costo+"</td>"+
+                "<td>$"+costot+"</td><td><button id='"+result[i].articulo+"' onclick='actualiza_entrada_temp(this.id);' class='btn btn-danger btn-xs elimina_articulo'><i class='fa fa-times'></i></button></td></tr>");
               })
               //alert(impuesto_id);
               //$("#proveedor").prepend("<option value='"+prov_id+"' selected>"+prov_desc+"</option>");
               //$('#proveedor option[value="'+prov_id+'"]').attr("selected", "selected");
               //$(".js-programmatic-set-val").on("click", function (){ $proveedor.val(prov_id).trigger("change"); });
               $("#proveedor").select2('val', prov_id);
-              $("#impuesto").select2('val', parseInt(impuesto_id));
+              //$("#impuesto").select2('val', parseInt(impuesto_id));
                resumen();
                alert("Se encontro una Entrada X Compra pendiente, si no deseas que vuelva a aparecer, elimina la entrada...");
              }
@@ -187,11 +242,11 @@ function actualiza_prov_temp(){
          $.ajax({
           beforeSend: function(){
            },
-          url: 'update_prov_entrada.php',
+          url: 'update_prov_orden.php',
           type: 'POST',
           data: 'id_prov='+$("#proveedor").val()+"&nombre_prov="+$("#proveedor option:selected").html(),
           success: function(t){
-
+				actualizar_info_proveedor();
            },
            error: function(jqXHR,estado,error){
            }
@@ -221,9 +276,9 @@ function actualiza_num_fac_entrada_temp(){
          $.ajax({
           beforeSend: function(){
            },
-          url: 'update_factura_entrada.php',
+          url: 'update_factura_orden.php',
           type: 'POST',
-          data: 'num_fact='+$("#factura").val(),
+          data: 'num_fact='+$("#orden").val(),
           success: function(t){
 
            },
@@ -294,7 +349,7 @@ function cancela_entrada_all(){
          $.ajax({
           beforeSend: function(){
            },
-          url: 'cancela_tempentrada.php',
+          url: 'cancela_temporden.php',
           type: 'POST',
           data: null,
           success: function(t){
@@ -304,20 +359,19 @@ function cancela_entrada_all(){
            }
           });
        })
-    $("#tabla_articulos > tbody:last").children().remove();
-     cancela_add();
-     resumen();
+   // $("#tabla_articulos > tbody:last").children().remove();
+     //cancela_add();
+     //resumen();
      //alert("Se cancelo el proceso de Entrada X Compra....");
-    $("#fecha").val("");
-    $("#factura").val("");
-    $("#impuesto").select2('val', 0);
     $("#proveedor").focus();
 }
 /**************************************************************************************/
 function procesa_entrada(){
+	var n_orden = $("#num_orden2").val();
+	var total = $('#tot').val().replace(/\D/g,'');
   //alert($("#descuento").val());
-          if($("#proveedor").val()==""||$("#fecha").val()==""||$("#factura").val()==""){
-            window.alert("Los campos Proveedor, Fecha, #Factura no pueden estar vacios...");
+          if($("#proveedor").val()==""||$("#fecha").val()==""||$("#orden").val()==""){
+            window.alert("Los campos Proveedor, Fecha, Orden de compra no pueden estar vacios...");
             return false;
           }
           $("#btn-procesa").prop('disabled', true);
@@ -332,6 +386,18 @@ function procesa_entrada(){
                      text    : 'Si',
                      onClick : function ($noty){
                           $noty.close();
+						  $.ajax({
+                             beforeSend: function(){
+                              },
+                             url: 'procesa_compra_total.php',
+                             type: 'POST',
+							data: 'fecha='+$("#fecha").val()+'&proveedor='+$("#proveedor").val()+
+							'&num_fact='+$("#orden").val()+'&total='+total,
+							success: function(x){
+							},
+							error: function(jqXHR,estado,error){
+                              }
+                             });
                           $('#tabla_articulos > tbody > tr').each(function(){
                              var cod = $(this).find('td').eq(0).html();
                              var can = $(this).find('td').eq(2).html();
@@ -339,12 +405,10 @@ function procesa_entrada(){
                              $.ajax({
                              beforeSend: function(){
                               },
-                             url: 'procesa_entrada.php',
+                             url: 'procesa_compra.php',
                              type: 'POST',
                              data: 'codigo='+cod+'&cantidad='+can+'&fecha='+$("#fecha").val()+'&costou='+cu+
-                             '&proveedor='+$("#proveedor").val()+'&descuento='+$("#descuento").val().replace(/\D/g,'')+
-                             '&tasa_iva='+$("#impuesto").val()+'&num_entrada='+$("#num_entrada2").val()+
-                             '&num_fact='+$("#factura").val(),
+                             '&proveedor='+$("#proveedor").val()+'&descuento=0'+'&tasa_iva=19'+'&num_orden='+$("#num_orden2").val()+'&num_fact='+$("#orden").val(),
                              success: function(x){
                                 if(x=="0"){
                                    var n = noty({
@@ -368,28 +432,37 @@ function procesa_entrada(){
                               }
                              });
                            });
-                             $.ajax({
-                             beforeSend: function(){
-                              },
-                             url: 'update_entrada.php',
-                             type: 'POST',
-                             data: null,
-                             success: function(x){
-                               $("#fecha").val("");
-                               $("#factura").val("");
-                               $("#descuento").val('0.00');
-                               $("#btn-procesa").prop('disabled', true);
-                               $("#tabla_articulos > tbody:last").children().remove();
-                               cancela_add();
-                               resumen();
-                               pone_num_entrada();
-                              },
-                             error: function(jqXHR,estado,error){
-                               $("#btn-procesa").html("Ocurrio un error al actualizar el numero de entrada...!!    "+estado+"   "+error);
-                               $("#btn-add-article").html("Ocurrio un error al actualizar el numero de entrada...!!    "+estado+"   "+error);
-                              }
-                             });
+						   $("#tabla_articulos > tbody:last").children().remove();
+						    cancela_add();
+                            resumen();
+                            pone_num_entrada();
+                            $("#btn-procesa").prop('disabled', true);
+                            $("#tabla_articulos > tbody:last").children().remove();       
                             cancela_entrada_all();
+							
+							var n = noty({
+							  text: 'Desea exportar la orden de compra a pdf?',
+							  buttons: [
+								{addClass: 'btn btn-primary', text: 'Si', onClick: function($noty) {
+									//console.log($noty.$bar.find('input#example').val());
+									$noty.close();
+									window.open("/imprimir_orden_compra.php?n_orden="+n_orden,"_blank");
+									
+								  }
+								},
+								{addClass: 'btn btn-danger', text: 'No', onClick: function($noty) {
+									$noty.close();
+									//noty({text: 'You clicked "Cancel" button', type: 'error'});
+									
+								  
+								  }
+								}
+							  ],
+							layout:'center',
+							theme:'relax',
+							type:'info'});
+							
+							
                           }
 
                    },
@@ -408,17 +481,18 @@ function pone_num_entrada(){
              $(document).ready(function(){
               $.ajax({
                beforeSend: function(){
-               $("#num_entrada").html("Buscando prox. entrada...");
+               $("#num_orden").html("Buscando prox. orden...");
                },
-             url: 'busca_num_entrada.php',
+             url: 'busca_num_orden.php',
              type: 'POST',
              data: null,
              success: function(x){
-             $("#num_entrada").html('Entrada # '+x);
-             $("#num_entrada2").val(x);
+             $("#num_orden").html('Orden de Compra # '+x);
+             $("#num_orden2").val(x);
+			 $("#orden").val(x);
              },
              error: function(jqXHR,estado,error){
-             $("#num_entrada").html('Hubo un error!!!'+' '+estado +' '+error);
+             $("#num_orden").html('Hubo un error!!!'+' '+estado +' '+error);
              }
             });
             });

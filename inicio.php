@@ -5,7 +5,7 @@
     <title>SerMac | Software</title>
     <?php include "./class_lib/links.php"; ?>
   </head>
-  <body onload="revisa_compras();revisa_ventas();pone_gastos();pone_users();genera_grafica();genera_grafica_existe();revisa_caducidades();">
+  <body onload="revisa_compras();revisa_ventas();pone_gastos();pone_users();genera_grafica();genera_grafica_existe();alerta_stock_min();revisa_caducidades();">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -108,11 +108,20 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
+	
+	
+	
 
     <div class="MsjAjaxForm"></div>
     <?php include "./class_lib/scripts.php"; ?>
-    <script src="plugins/morris/morris.min.js"></script>
+    <script src="plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
+	<script src="plugins/morris/morris.min.js"></script>
     <script src="plugins/morris/raphael-min.js"></script>
-    <script src="dist/js/source_init.js"></script>
+    
+	<script src="dist/js/source_init.js"></script>
+	<script src="dist/js/definicion_inputmask.js"></script>
+
+
+
   </body>
 </html>

@@ -35,6 +35,14 @@
               </ul>
             </li>
 
+			 <li class="treeview">
+              <a href="#"><i class="fa fa-shopping-cart"></i> <span>Compras.</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li><a href="orden_compra.php"><i class=" fa fa-cart-plus"></i> Crear Orden de Compra.</a></li>
+				<li><a href="lista_orden_compra.php"><i class="fa fa-cart-arrow-down"></i> Revisar Ordenes de Compra.</a></li>
+              </ul>
+            </li>
+			
             <li class="treeview">
               <a href="#"><i class="fa fa-users"></i> <span>Cartera Clientes.</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
@@ -57,7 +65,8 @@
               <ul class="treeview-menu">
                 <li><a href="entrada_compra.php"><i class="fa fa-download"></i> Entradas X Compra.</a></li>
                 <li><a href="rev_entrada.php"><i class="fa fa-search"></i> Revision de Entradas x Compra.</a></li>
-                <li><a href="valida_cambio.php?opt=1265780909"><i class="fa fa-sort-numeric-asc"></i> Ajustes de Inventario.</a></li>
+                <li><a href="aju_inventarios.php"><i class="fa fa-sort-numeric-asc"></i> Ajustes de Inventario.</a></li>
+				<li><a href="articulos_reponer.php"><i class="fa fa-clipboard"></i> Articulos a reponer.</a></li>
               </ul>
             </li>
 
